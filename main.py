@@ -20,7 +20,11 @@ async def send_signal(signal):
 async def run():
     global previous_price
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        # Browser launch with additional arguments for 'no-sandbox' and 'disable-setuid-sandbox'
+        browser = await p.chromium.launch(
+            headless=True, 
+            args=["--no-sandbox", "--disable-setuid-sandbox"]
+        )
         context = await browser.new_context()
         page = await context.new_page()
 
